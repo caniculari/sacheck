@@ -43,8 +43,7 @@ def sshConnection():
     try:
         child = pexpect.spawn('ssh %s@%s' % (user, hostname))
         child.timeout = 4
-        child.expect('[P,p]assword:')
-        print ('exito hasta el ssh')
+        login(child)
     except (pexpect.EOF, pexpect.TIMEOUT):
         print ("Can't connect")
         raise SystemExit
@@ -53,12 +52,20 @@ def telnetConnection():
     try:
         child = pexpect.spawn('ssh %s@%s' % (user, hostname))
         child.timeout = 4
-        child.expect('[U,u]sername:')
-        print('exito con telnet')
+        login(child)
     except (pexpect.EOF, pexpect.TIMEOUT): 
         print ("Can't connect")
         raise SystemExit  
 
+def login(child):
+    child.expect('[P,p]assword:')
+    child.sendline(password)
+    child.expect('\n*#')
+    child.sendline("show crypto isakmp sa")
+    child.expect('\n*#')
+    print (child.before)
+
 if (conn == "ssh"):
     sshConnection()
+                       
 
