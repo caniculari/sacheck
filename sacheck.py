@@ -43,7 +43,10 @@ def sshConnection():
     try:
         child = pexpect.spawn('ssh %s@%s' % (user, hostname))
         child.timeout = 4
-        login(child)
+        query_result = (login(child))
+        query_result = query_result.decode(encoding='utf-8')
+        child.close()
+        return query_result
     except (pexpect.EOF, pexpect.TIMEOUT):
         print ("Can't connect")
         raise SystemExit
@@ -63,9 +66,11 @@ def login(child):
     child.expect('\n*#')
     child.sendline("show crypto isakmp sa")
     child.expect('\n*#')
-    print (child.before)
+    return (child.before)
+
 
 if (conn == "ssh"):
-    sshConnection()
-                       
-
+    vpn_status = sshConnection()
+    vpn_status = vpn_status[vpn_status.find(peer):vpn_status.find("QM_IDLE")+7]
+    print (vpn_status)
+     
