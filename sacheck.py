@@ -71,7 +71,8 @@ def login(child):
 
 if (conn == "ssh"):
     vpn_status = sshConnection()
-    #vpn_status = vpn_status[vpn_status.find(peer):vpn_status.find("QM_IDLE")+7]
+    vpn_status = vpn_status[vpn_status.find(peer):vpn_status.find("QM_IDLE")+7]
     #vpn_status = vpn_status[vpn_status.find('src'):vpn_status.find("\r\n")]
-    print (vpn_status)
+    if len(vpn_status) < 45:
+        print ("Conexión arriba")
     print (repr(vpn_status)) 
