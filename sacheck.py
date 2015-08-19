@@ -4,6 +4,7 @@
 
 import argparse
 import pexpect
+import sys
 
 # Uses argparse to get the parameters for the plugin.
 parser = argparse.ArgumentParser(
@@ -64,15 +65,16 @@ def login(child):
     child.expect('[P,p]assword:')
     child.sendline(password)
     child.expect('\n*#')
-    child.sendline("show crypto isakmp sa")
+    child.sendline("show crypto isakmp sa | i %s" % peer)
     child.expect('\n*#')
     return (child.before)
 
 
 if (conn == "ssh"):
     vpn_status = sshConnection()
-    vpn_status = vpn_status[vpn_status.find(peer):vpn_status.find("QM_IDLE")+7]
-    #vpn_status = vpn_status[vpn_status.find('src'):vpn_status.find("\r\n")]
-    if len(vpn_status) < 45:
-        print ("Conexión arriba")
-    print (repr(vpn_status)) 
+    vpn_status = vpn_status[vpn_status.find(peer)+len(peer):].split()
+    if "jQM_IDLE" in vpn_status:
+        print ("VPN with %s is up" % peer )
+    else:
+        print ("VPN with %s is down" % peer )
+print (vpn_status)
