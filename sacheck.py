@@ -73,8 +73,9 @@ def login(child):
 if (conn == "ssh"):
     vpn_status = sshConnection()
     vpn_status = vpn_status[vpn_status.find(peer)+len(peer):].split()
-    if "jQM_IDLE" in vpn_status:
+    if "QM_IDLE" in vpn_status:
         print ("VPN with %s is up" % peer )
+        sys.exit(1)
     else:
         print ("VPN with %s is down" % peer )
-print (vpn_status)
+        sys.exit(0)
