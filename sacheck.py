@@ -13,19 +13,19 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-H', '--HOSTNAME', 
     required = True,
     help = 'Hostname or IP Address.')
+pparser.add_argument('-c', '--connection',
+    choices = ['telnet', 'ssh'],
+    help = 'Connection type [ssh|telnet].')
+parser.add_argument('-u', '--user',
+    required = True,
+    help = 'username to login.')
 parser.add_argument('-p', '--password',
     help = 'Access password. If your password has special characters put in quotes.')
 parser.add_argument('-e', '--enable',
     help = 'Enable password.')
-parser.add_argument('-c', '--connection',
-    choices = ['telnet', 'ssh'],
-    help = 'Connection type [ssh|telnet].')
 parser.add_argument('-P', '--peer',
     required = True,
     help = 'VPN peer IP address.')
-parser.add_argument('-u', '--user',
-    required = True,
-    help = 'username to login.')
 parser.add_argument('-w', '--warning',
     help='Warning response.')
 
