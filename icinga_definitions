@@ -1,0 +1,12 @@
+# This is the command definition usually in /etc/icinga/commands.cfg
+
+# check vpn isakmp
+
+define command {
+    command_name    sacheck
+    command_line    $USER1$/sacheck.py -H $HOSTADDRESS$ -c ssh -u $ARG1$ -c $ARG2$ -p $ARG3$ -P $ARG4$
+    }   
+
+
+# service definition
+
