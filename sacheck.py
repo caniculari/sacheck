@@ -63,7 +63,7 @@ def telnetConnection():
 
 def login(child):
     new_conn = "Are you sure you want to continue connecting (yes/no)? "
-    if child.expect == new_conn:
+    if child.expect == ".*Are you sure you want to continue connecting (yes/no)? ": 
         child.sendline("yes")
         print("cai en el if")
     child.expect('.*[P,p]assword:')
