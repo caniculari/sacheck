@@ -62,7 +62,11 @@ def telnetConnection():
         raise SystemExit  
 
 def login(child):
-    child.expect('[P,p]assword:')
+    new_conn = "Are you sure you want to continue connecting (yes/no)? "
+    if child.expect == new_conn:
+        child.sendline("yes")
+        print("cai en el if")
+    child.expect('.*[P,p]assword:')
     child.sendline(password)
     child.expect('\n*#')
     child.sendline("show crypto isakmp sa | i %s" % peer)
