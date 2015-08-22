@@ -86,7 +86,7 @@ if (conn == "ssh"):
     vpn_status = vpn_status[vpn_status.find(peer)+len(peer):].split()
     if "QM_IDLE" in vpn_status:
         print ("VPN with %s is up" % peer )
-        sys.exit(1)
+        sys.exit(0)
     else:
         print ("VPN with %s is down" % peer )
-        sys.exit(0)
+        sys.exit(1)
