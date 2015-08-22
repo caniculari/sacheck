@@ -53,9 +53,10 @@ def sshConnection():
             child.sendline("yes")
         if i == 2:
             pass
+        if i == 3:
+            query_result = (login(child))
+            query_result = query_result.decode(encoding='utf-8')
         child.timeout = 4
-        query_result = (login(child))
-        query_result = query_result.decode(encoding='utf-8')
         child.close()
         return query_result
     except (pexpect.EOF, pexpect.TIMEOUT):
@@ -72,7 +73,7 @@ def telnetConnection():
         raise SystemExit  
 
 def login(child):
-    child.expect('.*[P,p]assword:')
+    #child.expect('.*[P,p]assword:')
     child.sendline(password)
     child.expect('\n*#')
     child.sendline("show crypto isakmp sa | i %s" % peer)
