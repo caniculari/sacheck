@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(
 parser.add_argument('-H', '--HOSTNAME', 
     required = True,
     help = 'Hostname or IP Address.')
-pparser.add_argument('-c', '--connection',
+parser.add_argument('-c', '--connection',
     choices = ['telnet', 'ssh'],
     help = 'Connection type [ssh|telnet].')
 parser.add_argument('-u', '--user',
