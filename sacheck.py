@@ -41,8 +41,18 @@ warning = args.warning
 
 #connection via ssh
 def sshConnection():
+    SSH_NEWKEY = '(?i)are you sure you want to continue connecting'
+    COMMAND_PROMPT = '[#$] '
     try:
         child = pexpect.spawn('ssh %s@%s' % (user, hostname))
+        i = child.expect([pexpect.TIMEOUT, SSH_NEWKEY, COMMAND_PROMPT, '(?i)password'])
+        if i == 0:
+            print (child.before, child.after)
+            sys.exit (1)
+        if i == 1:
+            child.sendline("yes")
+        if i == 2:
+            pass
         child.timeout = 4
         query_result = (login(child))
         query_result = query_result.decode(encoding='utf-8')
@@ -62,10 +72,6 @@ def telnetConnection():
         raise SystemExit  
 
 def login(child):
-    new_conn = "Are you sure you want to continue connecting (yes/no)? "
-    if child.expect == ".*Are you sure you want to continue connecting (yes/no)? ": 
-        child.sendline("yes")
-        print("cai en el if")
     child.expect('.*[P,p]assword:')
     child.sendline(password)
     child.expect('\n*#')
